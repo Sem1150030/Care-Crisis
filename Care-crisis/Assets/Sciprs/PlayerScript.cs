@@ -9,12 +9,13 @@ public class PlayerScript : MonoBehaviour
     private Vector2 movement;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private Coroutine stopMovementCoroutine; // Reference to the coroutine
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>(); // Attach Animator component
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Attach SpriteRenderer component
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -27,29 +28,34 @@ public class PlayerScript : MonoBehaviour
         // Update Animator parameters
         if (movement != Vector2.zero)
         {
-            animator.SetBool("IsMoving", true);
+            if (stopMovementCoroutine != null)
+            {
+                StopCoroutine(stopMovementCoroutine); // Stop any running coroutine
+                stopMovementCoroutine = null;
+            }
 
-            // Set directional booleans
-            animator.SetBool("IsGoingLeft", movement.x < 0);
-            animator.SetBool("IsGoingRight", movement.x > 0);
-            animator.SetBool("IsGoingForward", movement.y > 0);  // Forward is when moving downwards on the Y-axis
-            animator.SetBool("IsGoingBackward", movement.y < 0); // Backward is when moving upwards on the Y-axis
+            animator.SetBool("Ismoving", true);
+
+            // Set moveX and moveY parameters for the blend tree
+            animator.SetFloat("moveX", movement.x);
+            animator.SetFloat("moveY", movement.y);
 
             // Handle sprite flipping for left direction
             if (movement.x < 0)
-                spriteRenderer.flipX = true; // Flip the sprite horizontally
+            {
+                spriteRenderer.flipX = true; // Flip sprite for left movement
+            }
             else if (movement.x > 0)
-                spriteRenderer.flipX = false; // Reset flipping for right
+            {
+                spriteRenderer.flipX = false; // Reset flipping for right movement
+            }
         }
         else
         {
-            animator.SetBool("IsMoving", false);
-
-            // Reset directional booleans when not moving
-            animator.SetBool("IsGoingLeft", false);
-            animator.SetBool("IsGoingRight", false);
-            animator.SetBool("IsGoingForward", false);
-            animator.SetBool("IsGoingBackward", false);
+            if (stopMovementCoroutine == null)
+            {
+                stopMovementCoroutine = StartCoroutine(DisableIsMovingAfterDelay(0.2f)); // Start coroutine with 200ms delay
+            }
         }
     }
 
@@ -57,5 +63,12 @@ public class PlayerScript : MonoBehaviour
     {
         // Apply movement
         rb.velocity = movement * moveSpeed;
+    }
+
+    private IEnumerator DisableIsMovingAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Wait for the specified delay
+        animator.SetBool("Ismoving", false); // Disable IsMoving after the delay
+        stopMovementCoroutine = null; // Clear the coroutine reference
     }
 }
