@@ -10,7 +10,6 @@ public class MinigameManager : MonoBehaviour
     public int patientsCompleted = 0;
     public Victory victory;
     
-    
     private void Awake()
     {
         if (Instance == null)
@@ -21,6 +20,16 @@ public class MinigameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        ResetPatientsCompleted();
+    }
+
+    public void ResetPatientsCompleted()
+    {
+        patientsCompleted = 0;
     }
 
     public void StartMinigame(string minigameName)
@@ -52,8 +61,14 @@ public class MinigameManager : MonoBehaviour
             if (patientsCompleted >= totalPatients)
             {
                 Debug.Log("Alle patiënten zijn behandeld!");
-                victory.Setup(10);
-                
+                if (victory != null)
+                {
+                    victory.Setup(10);
+                }
+                else
+                {
+                    Debug.LogError("Victory object is not assigned or has been destroyed!");
+                }
             }
             Debug.Log("current healed patients: " + patientsCompleted);
         }

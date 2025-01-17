@@ -19,6 +19,8 @@ public class GameOver : MonoBehaviour
 
     public void restartButton()
     {
+        MinigameManager.Instance.ResetPatientsCompleted();
+
         Debug.Log("Restarting");
         SceneManager.LoadScene(restart);
         gameObject.SetActive(false);
