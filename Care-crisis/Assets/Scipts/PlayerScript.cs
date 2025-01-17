@@ -62,7 +62,7 @@ public class PlayerScript : MonoBehaviour
     void FixedUpdate()
     {
         // Apply movement
-        rb.velocity = movement * moveSpeed;
+        rb.linearVelocity = movement * moveSpeed;
     }
 
     private IEnumerator DisableIsMovingAfterDelay(float delay)
