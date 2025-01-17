@@ -16,8 +16,35 @@ public class ReactionTest : Minigame
     private float reactionTimeLeft;
     private bool isButtonVisible = false;
 
+    public MinigameManager minigameManager;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        // Ensure minigameManager is assigned
+        if (minigameManager == null)
+        {
+            minigameManager = MinigameManager.Instance;
+        }
+    }
+
     public override void StartGame()
     {
+        // Ensure assignedPatient is assigned
+        if (assignedPatient == null)
+        {
+            Debug.LogError("assignedPatient is not assigned!");
+            return;
+        }
+
         // Zet de knop uit bij het begin
         reactionButton.SetActive(false);
 
@@ -65,13 +92,14 @@ public class ReactionTest : Minigame
             ReactionPanel.SetActive(false);
             isButtonVisible = false;
             finished = true;
+            minigameManager.MinigameCompleted(true);
         }
         else
         {
             Debug.Log("Reactietest mislukt. Je hebt niet op tijd gereageerd.");
             assignedPatient.CompleteHealing(false); // Patiënt is niet genezen
             ReactionPanel.SetActive(false);
-            
+            minigameManager.MinigameCompleted(false);
         }
 
         // Verberg de knop en stop de game

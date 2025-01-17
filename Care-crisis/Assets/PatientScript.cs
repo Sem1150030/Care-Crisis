@@ -10,7 +10,8 @@ public class PatientScript : MonoBehaviour
     private bool isHealed = false;
     private bool isBeingHealed = false;
     public Minigame assignedMinigame; // Verwijzing naar de gekoppelde minigame
-
+    public GameOver gameOver;
+    public PlayerScript playerScript;
     void Start()
     {
         remainingTime = maxTime;
@@ -62,6 +63,16 @@ public class PatientScript : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} is overleden.");
         Destroy(gameObject);
+        if (gameOver != null)
+        {
+            gameOver.Setup(10);
+        }
+
+        if (playerScript)
+        {
+            playerScript.moveSpeed = 0;
+
+        }
     }
 
     public void CompleteHealing(bool success)

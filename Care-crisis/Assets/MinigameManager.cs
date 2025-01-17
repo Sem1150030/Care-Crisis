@@ -6,7 +6,11 @@ using UnityEngine;
 public class MinigameManager : MonoBehaviour
 {
     public static MinigameManager Instance; // Singleton om minigames overal aan te roepen
-
+    public int totalPatients = 0; 
+    public int patientsCompleted = 0;
+    public Victory victory;
+    
+    
     private void Awake()
     {
         if (Instance == null)
@@ -44,7 +48,14 @@ public class MinigameManager : MonoBehaviour
         if (success)
         {
             Debug.Log("Minigame voltooid!");
-            // Geef feedback aan de patiënt
+            patientsCompleted++;
+            if (patientsCompleted >= totalPatients)
+            {
+                Debug.Log("Alle patiënten zijn behandeld!");
+                victory.Setup(10);
+                
+            }
+            Debug.Log("current healed patients: " + patientsCompleted);
         }
         else
         {
