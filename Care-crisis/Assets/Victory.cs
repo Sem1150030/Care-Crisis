@@ -17,13 +17,14 @@ public class Victory : MonoBehaviour
     
     public void restartButton()
     {
+        MinigameManager.Instance.ResetPatientsCompleted();
+
         SceneManager.LoadScene(restart);
-        gameObject.SetActive(false);
+        
     }
     
     public void NextLevel()
     {
         SceneManager.LoadScene(nextLevel);
-        gameObject.SetActive(false);
     }
 }
