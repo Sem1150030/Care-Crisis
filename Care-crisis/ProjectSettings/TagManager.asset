@@ -5,8 +5,14 @@ TagManager:
   serializedVersion: 3
   tags:
   - Patient
+<<<<<<< HEAD
   - Wall
   - KillBlock
+=======
+  - Wound
+  - Virus
+  - Healed
+>>>>>>> f5dcd40fe3705326f40c3e03300d4a8057239f4d
   layers:
   - Default
   - TransparentFX

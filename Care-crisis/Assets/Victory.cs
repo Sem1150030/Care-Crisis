@@ -19,7 +19,10 @@ public class Victory : MonoBehaviour
     {
         MinigameManager.Instance.ResetPatientsCompleted();
 
+        Debug.Log("Restarting");
         SceneManager.LoadScene(restart);
+        gameObject.SetActive(false);
+
         
     }
     

@@ -2455,6 +2455,10 @@ PrefabInstance:
       propertyPath: totalPatients
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8318335620927713575, guid: a31a01ccccae30d46a1113d463904a37, type: 3}
+      propertyPath: patientCounterText
+      value: 
+      objectReference: {fileID: 2031505988}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6082237885655650222, guid: a31a01ccccae30d46a1113d463904a37, type: 3}
