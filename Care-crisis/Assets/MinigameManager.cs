@@ -44,16 +44,31 @@ public class MinigameManager : MonoBehaviour
     public void StartMinigame(string minigameName)
     {
         Debug.Log($"Start minigame: {minigameName}");
-        // Hier kun je een scene laden of een overlay tonen
+
         switch (minigameName)
         {
             case "ReactionTest":
-                // Start de Reaction Test minigame
-                ReactionTest.Instance.StartGame();
+                if (ReactionTest.Instance != null)
+                {
+                    ReactionTest.Instance.StartGame();
+                }
+                else
+                {
+                    Debug.LogError("ReactionTest instance is not initialized!");
+                }
                 break;
-
+            case "SurgeryGame":
+                if (SurgeryScript.Instance != null)
+                {
+                    SurgeryScript.Instance.StartGame();
+                }
+                else
+                {
+                    Debug.LogError("SurgeryScript instance is not initialized!");
+                }
+                break;
             default:
-                Debug.LogError($"Onbekende minigame: {minigameName}");
+                Debug.LogError($"Unknown minigame: {minigameName}");
                 break;
         }
     }

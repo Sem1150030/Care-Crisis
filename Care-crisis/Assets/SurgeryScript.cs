@@ -1,28 +1,42 @@
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SurgeryScript : MonoBehaviour
+public class SurgeryScript : Minigame
 {
-    public ToolSelection toolSelection; // Reference to the ToolSelection script
+    public ToolSelection toolSelection; 
 
     private string tool;
 
-    // Counters for tracking wounds and viruses
+    
     private int remainingWounds;
     private int remainingViruses;
+    public PatientScript assignedPatient; 
+    public GameObject SurgeryPanel;
+    public bool finished = false;
+    public static SurgeryScript Instance; 
 
-    void Start()
+    public MinigameManager minigameManager;
+
+    private void Awake()
     {
-        // Initialize counters
-        remainingWounds = GameObject.FindGameObjectsWithTag("Wound").Length;
-        remainingViruses = GameObject.FindGameObjectsWithTag("Virus").Length;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
-        Debug.Log($"Starting game: {remainingWounds} wounds and {remainingViruses} viruses.");
+        if (minigameManager == null)
+        {
+            minigameManager = MinigameManager.Instance;
+        }
     }
 
     void Update()
     {
-        // Update the selected tool
         if (toolSelection != null)
         {
             tool = toolSelection.selectedTool;
@@ -51,18 +65,18 @@ public class SurgeryScript : MonoBehaviour
 
     private void HealWound(GameObject wound)
     {
-        // Activate the band-aid image
+        
         Transform bandAidImage = wound.transform.Find("band-aidimg");
         Transform woundImage = wound.transform.Find("WoundImg");
 
         if (bandAidImage != null) bandAidImage.gameObject.SetActive(true); // Show band-aid
         if (woundImage != null) woundImage.gameObject.SetActive(false);   // Hide wound
 
-        // Optional: Disable further interaction with the wound
+        
         Button button = wound.GetComponent<Button>();
         if (button != null) button.interactable = false;
 
-        // Change the tag to indicate it's healed
+       
         wound.tag = "Healed";
         Debug.Log("Wounds remaining: " + --remainingWounds);
     }
@@ -70,10 +84,10 @@ public class SurgeryScript : MonoBehaviour
 
     private void RemoveVirus(GameObject virus)
     {
-        // Destroy or disable the virus
+        
         Destroy(virus);
 
-        // Decrement remaining viruses and check game status
+        
         remainingViruses--;
         CheckGameStatus();
     }
@@ -89,5 +103,42 @@ public class SurgeryScript : MonoBehaviour
     private void MinigameFinished()
     {
         Debug.Log("Minigame finished! All wounds healed and viruses removed.");
+        EndGame(true);
+    }
+
+    public override void StartGame()
+    {
+        if (assignedPatient == null)
+        {
+            Debug.LogError("assignedPatient is not assigned!");
+            return;
+        }
+        else
+        {
+            SurgeryPanel.SetActive(true);
+            
+            remainingWounds = GameObject.FindGameObjectsWithTag("Wound").Length;
+            remainingViruses = GameObject.FindGameObjectsWithTag("Virus").Length;
+
+            Debug.Log($"Starting game: {remainingWounds} wounds and {remainingViruses} viruses.");
+        }
+        
+    }
+
+    public override void EndGame(bool success)
+    {
+        if (success)
+        {
+            Debug.Log("game voltooid. Succes!");
+            assignedPatient.CompleteHealing(true); // Patiënt is genezen
+            SurgeryPanel.SetActive(false);
+            // isButtonVisible = false;
+            finished = true;
+            minigameManager.MinigameCompleted(true);
+        }
+        
+
+        // Verberg de knop en stop de game
+        
     }
 }
