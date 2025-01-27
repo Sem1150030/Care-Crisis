@@ -11,7 +11,7 @@ public class MinigameManager : MonoBehaviour
     public int patientsCompleted = 0;
     public Victory victory;
     public Text patientCounterText;
-
+    public string minigameName;
     private void Awake()
     {
         if (Instance == null)
@@ -41,11 +41,11 @@ public class MinigameManager : MonoBehaviour
         patientCounterText.text = $"{patientsCompleted}/{totalPatients}";
     }
 
-    public void StartMinigame(string minigameName)
+    public void StartMinigame(string miniGameName)
     {
         Debug.Log($"Start minigame: {minigameName}");
 
-        switch (minigameName)
+        switch (miniGameName)
         {
             case "ReactionTest":
                 if (ReactionTest.Instance != null)
@@ -65,6 +65,16 @@ public class MinigameManager : MonoBehaviour
                 else
                 {
                     Debug.LogError("SurgeryScript instance is not initialized!");
+                }
+                break;
+            case "LabGame":
+                if (LabGame.Instance != null)
+                {
+                    LabGame.Instance.StartGame();
+                }
+                else
+                {
+                    Debug.LogError("LabGame instance is not initialized!");
                 }
                 break;
             default:

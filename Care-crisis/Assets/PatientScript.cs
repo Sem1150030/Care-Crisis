@@ -12,6 +12,7 @@ public class PatientScript : MonoBehaviour
     public Minigame assignedMinigame; // Verwijzing naar de gekoppelde minigame
     public GameOver gameOver;
     public PlayerScript playerScript;
+    public string minigameName;
     void Start()
     {
         remainingTime = maxTime;
@@ -42,8 +43,7 @@ public class PatientScript : MonoBehaviour
         if (assignedMinigame != null)
         {
             isBeingHealed = true;
-            Debug.Log($"{gameObject.name} wordt nu genezen!");
-            assignedMinigame.StartGame(); 
+            MinigameManager.Instance.StartMinigame(minigameName);
         }
         else
         {

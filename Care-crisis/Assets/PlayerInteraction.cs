@@ -1,20 +1,21 @@
+// PlayerInteraction.cs
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    private PatientScript currentPatient; // Huidige patiënt waarmee de speler kan interageren
+    private PatientScript currentPatient; // Current patient the player can interact with
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Controleer of de collider een patiënt is
+        // Check if the collider is a patient
         if (other.CompareTag("Patient"))
         {
             currentPatient = other.GetComponent<PatientScript>();
             if (currentPatient != null)
             {
-                // Toon interactieknop
+                // Show interaction button
                 UIManager.Instance.ShowInteractButton(true);
             }
         }
@@ -22,11 +23,11 @@ public class PlayerInteraction : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        // Controleer of de collider een patiënt is
+        // Check if the collider is a patient
         if (other.CompareTag("Patient"))
         {
             currentPatient = null;
-            // Verberg interactieknop
+            // Hide interaction button
             UIManager.Instance.ShowInteractButton(false);
         }
     }
@@ -35,9 +36,10 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (currentPatient != null)
         {
-            // Start genezingsproces bij de patiënt
+            UIManager.Instance.ShowInteractButton(false); // Hide button
+
+            // Start healing process for the patient
             currentPatient.StartHealing();
-            UIManager.Instance.ShowInteractButton(false); // Verberg knop
         }
     }
 }
