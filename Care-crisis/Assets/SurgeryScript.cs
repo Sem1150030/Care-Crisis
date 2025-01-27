@@ -106,7 +106,7 @@ public class SurgeryScript : Minigame
         EndGame(true);
     }
 
-    public override void StartGame()
+    public override void StartGame(string gameName)
     {
         if (assignedPatient == null)
         {

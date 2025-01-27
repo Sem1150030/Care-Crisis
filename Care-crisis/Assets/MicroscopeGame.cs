@@ -7,6 +7,7 @@ public class MicroscopeGame : Minigame
 {
     public GameObject[] virusses;
     private int CurrentVirusIndex;
+    public GameObject background;
     public GameObject InsideMicroscopePanel;
     public GameObject OutsideMicroscopePanel;
     public static MicroscopeGame Instance;
@@ -14,6 +15,8 @@ public class MicroscopeGame : Minigame
     public float CoolDownTimer = 5f;
     public bool CoolDown = false;
     public float currentCooldownTimer = 0f;
+    public PatientScript assignedPatient;
+    
     
     
     private void Awake()
@@ -61,6 +64,7 @@ public class MicroscopeGame : Minigame
             if (index == CurrentVirusIndex)
             {
                 Debug.Log("Correct virus!");
+                EndGame(true);
             }
 
             else
@@ -96,8 +100,9 @@ public class MicroscopeGame : Minigame
         Debug.Log("Cooldown started.");
     }
 
-    public override void StartGame()
+    public override void StartGame(string gameName)
     {
+        background.SetActive(true);
         OutsideMicroscopePanel.SetActive(false);
         InsideMicroscopePanel.SetActive(false);
         virusses[CurrentVirusIndex].SetActive(false);
@@ -107,6 +112,16 @@ public class MicroscopeGame : Minigame
 
     public override void EndGame(bool success)
     {
-        throw new System.NotImplementedException();
+        if (success)
+        {
+            Debug.Log("Microscope game completed successfully.");
+            background.SetActive(false);
+            OutsideMicroscopePanel.SetActive(false);
+            InsideMicroscopePanel.SetActive(false);
+            minigameManager.MinigameCompleted(true);
+            assignedPatient.CompleteHealing(true);
+
+
+        }
     }
 }

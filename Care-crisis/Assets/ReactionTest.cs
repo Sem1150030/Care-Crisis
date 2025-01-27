@@ -36,7 +36,7 @@ public class ReactionTest : Minigame
         }
     }
 
-    public override void StartGame()
+    public override void StartGame(string gameName)
     {
         // Ensure assignedPatient is assigned
         if (assignedPatient == null)

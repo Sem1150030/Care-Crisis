@@ -50,7 +50,7 @@ public class MinigameManager : MonoBehaviour
             case "ReactionTest":
                 if (ReactionTest.Instance != null)
                 {
-                    ReactionTest.Instance.StartGame();
+                    ReactionTest.Instance.StartGame("d");
                 }
                 else
                 {
@@ -60,17 +60,17 @@ public class MinigameManager : MonoBehaviour
             case "SurgeryGame":
                 if (SurgeryScript.Instance != null)
                 {
-                    SurgeryScript.Instance.StartGame();
+                    SurgeryScript.Instance.StartGame("d");
                 }
                 else
                 {
                     Debug.LogError("SurgeryScript instance is not initialized!");
                 }
                 break;
-            case "LabGame":
+            case "LabGameMicroscope":
                 if (LabGame.Instance != null)
                 {
-                    LabGame.Instance.StartGame();
+                    LabGame.Instance.StartGame("MicroscopeGame");
                 }
                 else
                 {

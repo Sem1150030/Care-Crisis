@@ -1,5 +1,8 @@
-﻿using Unity.VisualScripting;
+﻿using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
+using UnityEngine.UI;
 
 namespace DefaultNamespace
 {
@@ -10,6 +13,9 @@ namespace DefaultNamespace
         public bool started = false;
         public static LabGame Instance; 
         public MinigameManager minigameManager;
+        public Button startGameButton;
+        public string gameName;
+        public GameObject infoText;
 
 
 
@@ -35,16 +41,20 @@ namespace DefaultNamespace
             if (other.CompareTag("Player") && started && !atLab)
             {
                 Debug.Log("Player reached the lab. Get the medicine.");
+                infoText.SetActive(false);
                 ReachLab();
             }
         }
         
-        public override void StartGame()
+        public override void StartGame(string gameName)
         {
             Debug.Log("LabGame started.");
             started = true;
+            this.gameName = gameName;
+            infoText.SetActive(true);
             // Additional setup if needed
         }
+        
 
         public override void EndGame(bool success)
         {
@@ -61,20 +71,32 @@ namespace DefaultNamespace
             {
                 atLab = true;
                 Debug.Log("Player reached the lab. Get the medicine.");
-                GetMedicine();
+                startGameButton.gameObject.SetActive(true);
+                
             }
         }
 
-        private void GetMedicine()
-        {
-            if (atLab && started)
+        public void startGame()
+        { 
+        startGameButton.gameObject.SetActive(false);
+        Debug.Log($"Start minigame: {gameName}");
+
+        switch (gameName)
             {
-                hasMedicine = true;
-                Debug.Log("Player got the medicine. Return to the patient.");
-                EndGame(true);
-            }
-            
+                case "MicroscopeGame":
+                    if (MicroscopeGame.Instance != null)
+                    {
+                        MicroscopeGame.Instance.StartGame("d");
+                    }
+                    else
+                    {
+                        Debug.LogError("MicroscopeGame instance is not initialized!");
+                    }
+                    break;
+            } 
         }
+
+        
 
         
     }
