@@ -30,4 +30,9 @@ public class Victory : MonoBehaviour
     {
         SceneManager.LoadScene(nextLevel);
     }
+    
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 }
