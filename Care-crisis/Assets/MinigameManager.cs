@@ -79,6 +79,16 @@ public class MinigameManager : MonoBehaviour
                     Debug.LogError("TicTacToe instance is not initialized!");
                 }
                 break;
+            case "TicTacToe 2":
+                if (TicTacToeManager.Instance != null)
+                {
+                    TicTacToeManager.Instance.StartGame("dd");
+                }
+                else
+                {
+                    Debug.LogError("TicTacToe instance is not initialized!");
+                }
+                break;
             case "BacteriaDestroyer":
                 if (BacteriaDestroyer.Instance != null)
                 {
@@ -90,7 +100,17 @@ public class MinigameManager : MonoBehaviour
                     Debug.LogError("BacteriaDestroyer instance is not initialized!");
                 }
                 break;
-            
+            case "BacteriaDestroyer 2":
+                if (BacteriaDestroyer.Instance != null)
+                {
+                    BacteriaDestroyer.Instance.StartGame("dd");
+
+                }
+                else
+                {
+                    Debug.LogError("BacteriaDestroyer instance is not initialized!");
+                }
+                break;
             case "SurgeryGame":
                 if (SurgeryScript.Instance != null)
                 {
