@@ -30,17 +30,19 @@ public class BacteriaMovement : MonoBehaviour
             Debug.LogError("This GameObject needs a Button component to detect clicks.");
         }
     }
-
     void Update()
     {
-        if (rectTransform != null)
+        if (destroyer != null && destroyer.gameStarted)
         {
-            rectTransform.anchoredPosition -= new Vector2(0, fallSpeed * Time.deltaTime);
-
-            if (rectTransform.anchoredPosition.y < destroyThreshold)
+            if (rectTransform != null)
             {
-                destroyer.Buffer--;
-                Destroy(gameObject);
+                rectTransform.anchoredPosition -= new Vector2(0, fallSpeed * Time.deltaTime);
+
+                if (rectTransform.anchoredPosition.y < destroyThreshold)
+                {
+                    destroyer.Buffer--;
+                    Destroy(gameObject);
+                }
             }
         }
     }

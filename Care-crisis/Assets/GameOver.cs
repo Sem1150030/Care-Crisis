@@ -17,7 +17,7 @@ public class GameOver : MonoBehaviour
         //pointText.text = score.ToString() + " POINTS";
     }
 
-    public void restartButton()
+    public void restartButton(string restart)
     {
         MinigameManager.Instance.ResetPatientsCompleted();
 
