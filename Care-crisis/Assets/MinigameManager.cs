@@ -58,6 +58,17 @@ public class MinigameManager : MonoBehaviour
                 }
                 break;
             
+            case "SyringeFilling":
+                if (SyringeFilling.Instance != null)
+                {
+                    SyringeFilling.Instance.StartGame("d");
+                }
+                else
+                {
+                    Debug.LogError("SyringeGame instance is not initialized!");
+                }
+                break;  
+            
             case "TicTacToe":
                 if (TicTacToeManager.Instance != null)
                 {
