@@ -67,6 +67,16 @@ public class MinigameManager : MonoBehaviour
                     Debug.LogError("SurgeryScript instance is not initialized!");
                 }
                 break;
+            case "LabGameVitals":
+                if (LabGame.Instance != null)
+                {
+                    LabGame.Instance.StartGame("VitalsGame");
+                }
+                else
+                {
+                    Debug.LogError("LabGame instance is not initialized!");
+                }
+                break;
             case "LabGameMicroscope":
                 if (LabGame.Instance != null)
                 {

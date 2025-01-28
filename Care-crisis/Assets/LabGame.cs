@@ -17,8 +17,6 @@ namespace DefaultNamespace
         public string gameName;
         public GameObject infoText;
 
-
-
         private void Awake()
         {
             if (Instance == null)
@@ -55,14 +53,13 @@ namespace DefaultNamespace
             // Additional setup if needed
         }
         
-
         public override void EndGame(bool success)
         {
             if (success)
             {
                 Debug.Log("LabGame completed successfully.");
             }
-            
+            ResetGame();
         }
 
         public void ReachLab()
@@ -72,16 +69,16 @@ namespace DefaultNamespace
                 atLab = true;
                 Debug.Log("Player reached the lab. Get the medicine.");
                 startGameButton.gameObject.SetActive(true);
-                
             }
         }
 
         public void startGame()
         { 
-        startGameButton.gameObject.SetActive(false);
-        Debug.Log($"Start minigame: {gameName}");
+            startGameButton.gameObject.SetActive(false);
+            Debug.Log($"Start minigame: {gameName}");
+            ResetGame();
 
-        switch (gameName)
+            switch (gameName)
             {
                 case "MicroscopeGame":
                     if (MicroscopeGame.Instance != null)
@@ -93,11 +90,19 @@ namespace DefaultNamespace
                         Debug.LogError("MicroscopeGame instance is not initialized!");
                     }
                     break;
+                case "VitalsGame":
+                    VitalsScript.Instance.StartGame("d");
+                    break;
             } 
         }
 
-        
-
-        
+        private void ResetGame()
+        {
+            atLab = false;
+            started = false;
+            hasMedicine = false;
+            infoText.SetActive(false);
+            startGameButton.gameObject.SetActive(false);
+        }
     }
 }
