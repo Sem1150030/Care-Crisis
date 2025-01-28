@@ -5238,7 +5238,7 @@ PrefabInstance:
       objectReference: {fileID: 1271325227}
     - target: {fileID: 8318335620927713575, guid: a31a01ccccae30d46a1113d463904a37, type: 3}
       propertyPath: totalPatients
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8318335620927713575, guid: a31a01ccccae30d46a1113d463904a37, type: 3}
       propertyPath: patientCounterText
