@@ -1,21 +1,43 @@
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;  // Ensure this is included for TMP support
 
-public class TicTacToeManager : MonoBehaviour
+public class TicTacToeManager : Minigame
 {
     public Button[] cells; // Assign the buttons in the Inspector
     private string[] board = new string[9];
     private string currentPlayer = "X";
+    public GameObject Panel;
 
-    void Start()
+    public PatientScript assignedPatient; 
+    public static TicTacToeManager Instance; 
+    
+    public MinigameManager minigameManager;
+
+    private void Awake()
     {
-        InitializeGame();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        if (minigameManager == null)
+        {
+            minigameManager = MinigameManager.Instance;
+        }
     }
+    
+    
 
-    void InitializeGame()
-    {
+    public override void StartGame(string gameName)    {
+        Panel.SetActive(true);
+        
         for (int i = 0; i < cells.Length; i++)
         {
             int index = i;
@@ -44,13 +66,13 @@ public class TicTacToeManager : MonoBehaviour
         if (CheckWin(currentPlayer))
         {
             Debug.Log(currentPlayer + " wins!");
-            EndGame();
+            EndGames();
             return;
         }
         if (CheckDraw())
         {
             Debug.Log("It's a draw!");
-            EndGame();
+            EndGames();
             return;
         }
 
@@ -109,12 +131,20 @@ public class TicTacToeManager : MonoBehaviour
         return true;
     }
 
-    void EndGame()
+    void EndGames()
     {
         // Disable all buttons after game ends
         foreach (var button in cells)
         {
             button.interactable = false;
         }
+        EndGame(true);
+    }
+    
+    public override void EndGame(bool success)
+    {
+        Panel.SetActive(false);
+        assignedPatient.CompleteHealing(true); 
+        minigameManager.MinigameCompleted(true);
     }
 }

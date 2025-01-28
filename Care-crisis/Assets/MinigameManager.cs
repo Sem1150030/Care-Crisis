@@ -57,6 +57,17 @@ public class MinigameManager : MonoBehaviour
                     Debug.LogError("ReactionTest instance is not initialized!");
                 }
                 break;
+            
+            case "TicTacToe":
+                if (TicTacToeManager.Instance != null)
+                {
+                    TicTacToeManager.Instance.StartGame("d");
+                }
+                else
+                {
+                    Debug.LogError("TicTacToe instance is not initialized!");
+                }
+                break;
             case "BacteriaDestroyer":
                 if (BacteriaDestroyer.Instance != null)
                 {
