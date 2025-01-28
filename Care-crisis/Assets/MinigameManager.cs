@@ -57,6 +57,18 @@ public class MinigameManager : MonoBehaviour
                     Debug.LogError("ReactionTest instance is not initialized!");
                 }
                 break;
+            case "BacteriaDestroyer":
+                if (BacteriaDestroyer.Instance != null)
+                {
+                    BacteriaDestroyer.Instance.StartGame("d");
+                    
+                }
+                else
+                {
+                    Debug.LogError("BacteriaDestroyer instance is not initialized!");
+                }
+                break;
+            
             case "SurgeryGame":
                 if (SurgeryScript.Instance != null)
                 {
